@@ -4,18 +4,20 @@ import uvicorn
 
 
 app = FastAPI()
+@app.get("/")
+async def get(inp):
+    return {'response':inp}
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    await websocket.accept()
     try:
         while True:
             data = await websocket.receive_text()
-            query=eval(data)['content']
+            #query=eval(data)['content']
             
             
-            await websocket.send_text(query)
+            await websocket.send_text(data)
            
                
     except WebSocketDisconnect:
