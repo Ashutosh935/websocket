@@ -8,11 +8,14 @@ app = FastAPI()
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
+    await websocket.accept()
     try:
         while True:
             data = await websocket.receive_text()
+            query=eval(data)['content']
             
-            await websocket.send_text(value)
+            
+            await websocket.send_text(query)
            
                
     except WebSocketDisconnect:
