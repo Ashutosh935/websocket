@@ -28,10 +28,6 @@ import uvicorn
 #         pass
 
 
-async def astream_log():
-    for i in range(5):
-        yield f"Result {i}"
-
 
 # @app.websocket("/ws2")
 # async def websocket_endpoint2(websocket: WebSocket):
@@ -58,7 +54,7 @@ async def astream_log():
     for i in range(5):
         yield f"Result {i}"
 
-async def websocket_handler(websocket):
+async def websocket_handler(websocket,path):
     await websocket.send("Connection established. Send data.")
     try:
         data = await websocket.recv()
