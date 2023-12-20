@@ -59,11 +59,12 @@ async def websocket_handler(websocket,path):
     try:
         data = await websocket.recv()
     
-        async for value in astream_log():
+        for value in range(5):
+              
             try:
                 print(value, end='#')
                 await websocket.send(value)
-                await asyncio.sleep(0.1)
+                await asyncio.sleep(0.2)
             except Exception as e:
                 print(f"Error processing data: {e}")
     except websockets.exceptions.ConnectionClosed:
