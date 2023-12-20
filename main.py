@@ -63,7 +63,7 @@ async def websocket_handler(websocket,path):
             try:
                 print(value, end='#')
                 await websocket.send(value)
-                await asyncio.sleep(0.04)
+                await asyncio.sleep(0.1)
             except Exception as e:
                 print(f"Error processing data: {e}")
     except websockets.exceptions.ConnectionClosed:
