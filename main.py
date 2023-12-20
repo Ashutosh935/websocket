@@ -54,7 +54,9 @@ async def astream_log():
 # if __name__ == '__main__':
 #     uvicorn.run(app, port=8080, host='0.0.0.0')
 
-
+async def astream_log():
+    for i in range(5):
+        yield f"Result {i}"
 
 async def websocket_handler(websocket):
     await websocket.send("Connection established. Send data.")
