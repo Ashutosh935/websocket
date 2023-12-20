@@ -60,12 +60,7 @@ async def websocket_handler(websocket):
     await websocket.send("Connection established. Send data.")
     try:
         data = await websocket.recv()
-        print('################', data)
-        
-        # Assuming data is a JSON string
-        query = json.loads(data)['content']
-        
-        # Assuming `qa_chain` and `QA_CHAIN_PROMPT` are defined somewhere
+    
         async for value in astream_log():
             try:
                 print(value, end='#')
