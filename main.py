@@ -54,7 +54,7 @@ async def astream_log():
     for i in range(5):
         yield f"Result {i}"
 
-async def websocket_handler(websocket,path):
+async def websocket_handler(websocket):
     await websocket.send("Connection established. Send data.")
     try:
         data = await websocket.recv()
