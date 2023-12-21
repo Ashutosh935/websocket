@@ -4,7 +4,7 @@ import json
 import websockets
 import uvicorn
 
-app = FastAPI()
+# app = FastAPI()
 
 
 # @app.get("/")
@@ -50,31 +50,53 @@ app = FastAPI()
 # if __name__ == '__main__':
 #     uvicorn.run(app, port=8080, host='0.0.0.0')
 
-async def astream_log():
-    for i in range(5):
-        yield f"Result {i}"
+# async def astream_log():
+#     for i in range(5):
+#         yield f"Result {i}"
 
-async def websocket_handler(websocket):
-    await websocket.send("Connection established. Send data.")
-    try:
-        data = await websocket.recv()
+# async def websocket_handler(websocket):
+#     await websocket.send("Connection established. Send data.")
+#     try:
+#         data = await websocket.recv()
     
-        for value in range(5):
+#         for value in range(5):
               
-            try:
-                print(value, end='#')
-                await websocket.send(value)
-                await asyncio.sleep(0.2)
-            except Exception as e:
-                print(f"Error processing data: {e}")
-    except websockets.exceptions.ConnectionClosed:
-        print("WebSocket disconnected")
+#             try:
+#                 print(value, end='#')
+#                 await websocket.send(value)
+#                 await asyncio.sleep(0.2)
+#             except Exception as e:
+#                 print(f"Error processing data: {e}")
+#     except websockets.exceptions.ConnectionClosed:
+#         print("WebSocket disconnected")
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket_handler(websocket)
+# @app.websocket("/ws")
+# async def websocket_endpoint(websocket: WebSocket):
+#     await websocket_handler(websocket)
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    uvicorn.run(app, port=8000, host='0.0.0.0')
+#     uvicorn.run(app, port=8000, host='0.0.0.0')
+
+
+ 
+# create handler for each connection
+ 
+async def handler(websocket, path):
+ 
+    data = await websocket.recv()
+ 
+    reply = f"Data recieved as:  {data}!"
+ 
+    await websocket.send(reply)
+ 
+ 
+ 
+start_server = websockets.serve(handler, "localhost", 8000)
+ 
+ 
+ 
+asyncio.get_event_loop().run_until_complete(start_server)
+ 
+asyncio.get_event_loop().run_forever()
