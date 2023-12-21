@@ -4,7 +4,7 @@ import json
 import websockets
 import uvicorn
 
-# app = FastAPI()
+app = FastAPI()
 
 
 # @app.get("/")
@@ -70,10 +70,11 @@ async def websocket_handler(websocket,path):
     except websockets.exceptions.ConnectionClosed:
         print("WebSocket disconnected")
 
-if __name__ == '__main__':
-    start_server = websockets.serve(
-        websocket_handler, "0.0.0.0", 8080
-    )
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket_handler(websocket)
 
-    asyncio.get_event_loop().run_until_complete(start_server)
-    asyncio.get_event_loop().run_forever()
+
+if __name__ == '__main__':
+
+    uvicorn.run(app, port=8000, host='0.0.0.0')
